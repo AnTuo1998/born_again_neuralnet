@@ -126,7 +126,6 @@ class Bottleneck(nn.Module):
         return out
 
 
-
 class ResNet(nn.Module):
     """Resnet with multiple branches
 
@@ -250,7 +249,7 @@ class ResNet(nn.Module):
         return self._forward_impl(x, is_feat)
 
 
-def ResNet18():
+def resnet18():
     return ResNet(BasicBlock, [2, 2, 2, 2])
 
 
