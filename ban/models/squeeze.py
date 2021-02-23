@@ -50,7 +50,8 @@ class SqueezeNet(nn.Module):
         self.num_classes = num_classes
         if version == '1_0':
             self.features = nn.Sequential(
-                nn.Conv2d(3, 96, kernel_size=7, stride=2),
+                # nn.Conv2d(3, 96, kernel_size=7, stride=2),
+                nn.Conv2d(3, 96, kernel_size=3, stride=1, padding=1),
                 nn.ReLU(inplace=True),
                 nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
                 Fire(96, 16, 64, 64),

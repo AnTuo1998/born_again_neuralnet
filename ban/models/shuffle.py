@@ -120,13 +120,13 @@ class ShuffleNetV2(nn.Module):
         input_channels = 3
         output_channels = self._stage_out_channels[0]
         self.conv1 = nn.Sequential(
-            nn.Conv2d(input_channels, output_channels, 3, 2, 1, bias=False),
+            nn.Conv2d(input_channels, output_channels, 3, 1, 1, bias=False),
             nn.BatchNorm2d(output_channels),
             nn.ReLU(inplace=True),
         )
         input_channels = output_channels
 
-        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        # self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
         # Static annotations for mypy
         self.stage2: nn.Sequential
@@ -154,7 +154,7 @@ class ShuffleNetV2(nn.Module):
     def _forward_impl(self, x: Tensor) -> Tensor:
         # See note [TorchScript super()]
         x = self.conv1(x)
-        x = self.maxpool(x)
+        # x = self.maxpool(x)
         x = self.stage2(x)
         x = self.stage3(x)
         x = self.stage4(x)
