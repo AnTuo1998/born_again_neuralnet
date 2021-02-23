@@ -158,3 +158,10 @@ tags
 
 
 # End of https://www.gitignore.io/api/vim,macos,python
+.vscode
+.vscode
+__pycache__/
+Save
+Data
+try*
+snapshots
