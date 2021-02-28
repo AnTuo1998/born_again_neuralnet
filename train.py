@@ -183,11 +183,12 @@ def main():
 
         print("best loss: ", best_loss)
         print("Born Again...")
-        updater.register_last_model(last_model_weight)
+        updater.register_last_model(args.model, last_model_weight, device)
         updater.gen += 1
         best_loss_list.append(best_loss)
         best_loss = 1e+9
-        model = config.get_model().to(device)
+        # model = config.get_model().to(device)
+        model = getattr(config, args.model)().to(device)
         optimizer = optim.Adam(model.parameters(), lr=args.lr)
         updater.model = model
         updater.optimizer = optimizer

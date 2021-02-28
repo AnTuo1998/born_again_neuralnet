@@ -26,13 +26,14 @@ class BANUpdater(object):
         self.optimizer.step()
         return loss.item(), outputs
 
-    def register_last_model(self, weight):
-        self.last_model = config.get_model()
+    def register_last_model(self, model, weight, device):
+        # self.last_model = config.get_model()
+        self.last_model = getattr(config, model)().to(device)
         self.last_model.load_state_dict(torch.load(weight))
 
     def kd_loss(self, outputs, labels, teacher_outputs, alpha=0.2, T=20):
-        KD_loss = nn.KLDivLoss()(F.log_softmax(outputs/T, dim=1),
-                                 F.softmax(teacher_outputs/T, dim=1)) * \
+        KD_loss = nn.KLDivLoss(reduction="batchmean")(F.log_softmax(outputs/T, dim=1),
+                                                      F.softmax(teacher_outputs/T, dim=1)) * \
             alpha + F.cross_entropy(outputs, labels) * (1. - alpha)
 
         return KD_loss
